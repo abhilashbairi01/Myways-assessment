@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>User Info</h1>
+    <form id="user-info">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" required>
+        <br>
+        <button type="submit">submit</button>
+
+    </form>
+    <script>
+        const form =document.querySelector('#user-info');
+        form.addEventListener('submit',async(e)=>{
+            e.preventDefault();
+            // const form =document.getElementById('#user-info');
+            const name=document.querySelector('#name').value;
+            const email=document.querySelector('#email').value;
+            const phone=document.querySelector('#phone').value;
+            const response=await fetch(` https://test-api-v3.myways.ai/user?email=<abhilashbairi9908@gmail.com>`);
+            const data= await response.json();
+            if(data.exists) {
+                alert('user found');
+            }
+            else
+            {
+            const createresponse = await fetch(`https://test-api-v3.myways.ai/user`,{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name,email,phone}),
+        })
+        alert('user created successfully');
+            }
+        })
+    </script>
+    
+</body>
+</html>
